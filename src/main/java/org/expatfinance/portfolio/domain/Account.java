@@ -24,8 +24,9 @@ public class Account {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "account_type", nullable = false)
-    private String accountType; // 'BANK' for MVP [cite: 30]
+    private AccountType accountType; // 'BANK' for MVP [cite: 30]
 
     @Column(name = "balance", precision = 20, scale = 8, nullable = false)
     private BigDecimal balance;

@@ -31,8 +31,9 @@ public class Loan {
     @Column(name = "currency", nullable = false, length = 3)
     private String currency; // Acts as a loose FK to ReferenceRate
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "rate_type", nullable = false)
-    private String rateType; // 'FIXED' or 'FLOATING'
+    private RateType rateType; // 'FIXED' or 'FLOATING'
 
     @Column(name = "current_rate", precision = 5, scale = 2, nullable = false)
     private BigDecimal currentRate;
