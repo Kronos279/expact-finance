@@ -1,0 +1,6 @@
+CREATE TABLE users (
+   id VARCHAR(128) PRIMARY KEY,
+   home_currency CHAR(3) NOT NULL,
+   fcm_token VARCHAR(255),
+   created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
