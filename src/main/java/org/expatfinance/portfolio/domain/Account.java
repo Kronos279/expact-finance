@@ -8,7 +8,11 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "accounts")
-@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Account {
 
     @Id
@@ -16,8 +20,6 @@ public class Account {
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 
-    // Notice we just store the String ID here to enforce domain isolation,
-    // rather than creating a complex @ManyToOne relationship right away.
     @Column(name = "user_id", nullable = false)
     private String userId;
 

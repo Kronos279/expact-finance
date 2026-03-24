@@ -1,0 +1,1 @@
+ALTER TABLE users ALTER COLUMN home_currency DROP NOT NULL;

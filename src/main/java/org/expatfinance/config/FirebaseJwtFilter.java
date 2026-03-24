@@ -8,6 +8,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.expatfinance.portfolio.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -17,9 +20,12 @@ import java.io.IOException;
 import java.util.Collections;
 
 @Component
+@RequiredArgsConstructor
 public class FirebaseJwtFilter extends OncePerRequestFilter {
 
     private static final String BEARER_PREFIX = "Bearer ";
+
+    private final UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -33,7 +39,12 @@ public class FirebaseJwtFilter extends OncePerRequestFilter {
 
         try{
             FirebaseToken decoded = FirebaseAuth.getInstance().verifyIdToken(authToken);
+            // This gets the Credentials from the FireBase Token
             String userId = decoded.getUid();
+            String email = decoded.getEmail();
+            String name = (String) decoded.getClaims().get("name");
+            userService.syncUser(userId, email, name);
+
 
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
